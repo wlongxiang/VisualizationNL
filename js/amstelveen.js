@@ -1,16 +1,16 @@
 var chartDom = document.getElementById('main');
 var myChart = echarts.init(chartDom);
 var option;
-var dataSeries;
+var aantal_inwoners_data = [];
 
 myChart.showLoading();
 
 // load data
-$.getJSON('./data/processed/amstelveen-aantal-inwoners.json', function(data){
- dataSeries = data;
+$.getJSON('./data/processed/cities/amstelveen/amstelveen-aantal-inwoners.json', function(data){
+ aantal_inwoners_data = data;
 });
 
-$.get('./data/processed/amstelveen-geometry.json', function (amstelveenJson) {
+$.get('./data/processed/cities/amstelveen/amstelveen-geometry.json', function (amstelveenJson) {
     myChart.hideLoading();
     echarts.registerMap('amstelveen', amstelveenJson); //register geojson as map
     option = {
@@ -54,7 +54,7 @@ $.get('./data/processed/amstelveen-geometry.json', function (amstelveenJson) {
         },
         series: [
             {
-                name: 'AmstelveenData',
+                name: 'Population',
                 type: 'map',
                 roam: true,
                 map: 'amstelveen',
@@ -64,7 +64,7 @@ $.get('./data/processed/amstelveen-geometry.json', function (amstelveenJson) {
                         show: true
                     }
                 },
-                data:dataSeries
+                data:aantal_inwoners_data
             }
         ]
 
